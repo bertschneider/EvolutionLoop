@@ -1,4 +1,4 @@
-(ns de.herrnorbert.EvolutionLoop.utils
+(ns de.herrnorbert.EvolutionLoop.core.utils
   "Some utils .. nothing special.")
 
 (defn conj-in

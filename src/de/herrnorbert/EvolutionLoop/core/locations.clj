@@ -1,4 +1,4 @@
-(ns de.herrnorbert.EvolutionLoop.locations
+(ns de.herrnorbert.EvolutionLoop.core.locations
   "Some functions to generate and/or manipulate locations in a 2d grid.
 Position [0 0] is the top left corner of the word")
 

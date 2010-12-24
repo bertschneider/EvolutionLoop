@@ -1,14 +1,17 @@
-(ns de.herrnorbert.EvolutionLoop.core
+(ns de.herrnorbert.EvolutionLoop.core.core
   "The core namespace of this little game.
-The main animal functions return a vector like '[updated-world animal]'. This vector is shifted from one function, like 'eat', to the other functions, like 'reproduce'."
-  (:use [de.herrnorbert.EvolutionLoop.locations :only [rnd-location directions]])
-  (:use [de.herrnorbert.EvolutionLoop.utils :only [rnd-int-vec conj-in]]))
+The main animal functions return a vector like '[updated-world animal]'. This vector is shifted from one function, like 'eat', to the other functions, like 'reproduce'.
+
+Evaluate the world to the next state with 'update-world':
+> (update-world default-world)"
+  (:use [de.herrnorbert.EvolutionLoop.core.locations :only [rnd-location directions]])
+  (:use [de.herrnorbert.EvolutionLoop.core.utils :only [rnd-int-vec conj-in]]))
 
 ;; Some constants. This can be overwritten in the world struct.
 (def *default-height* 100)
 (def *default-width* 100)
 (def *default-plant-energy* 80)
-(def *default-reproduction-energy* 200)
+(def *default-reproduction-energy* 300)
 
 ;; A plant only consists of a location and some energy an animal can gain by eating it.
 (defstruct plant :location :energy)
@@ -33,7 +36,7 @@ The main animal functions return a vector like '[updated-world animal]'. This ve
                            {:width  100
                             :height 100
                             :plant-energy 80
-                            :reproduction-energy 200}))
+                            :reproduction-energy 300}))
 ;;
 ;; Plants
 ;;
