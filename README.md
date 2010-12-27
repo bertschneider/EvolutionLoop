@@ -8,10 +8,15 @@ It simulates a world in which animals move around on their search of
 food. As the world progresses they reproduce and mutate and eventually
 build two new kinds of animals.
 
+## Tests
+
+Currently the tests aren't working. I tried `midje` but that didn't
+work out for me. I will rewrite them with `LazyTest`in the future.
+
 ## Usage
 
-The easies way to start the simulation is to use the functions
-provided in the package
+The easiest way to start the simulation is to use the functions
+provided in package
 `de.herrnorbert.EvolutionLoop.gui-repl.gui-repl`. Furthermore there
 are some functions to inspect the world and the animals in it.
 
