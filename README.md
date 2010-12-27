@@ -15,6 +15,11 @@ work out for me. I will rewrite them with `LazyTest`in the future.
 
 ## Usage
 
+A few GUIs are plant for this game. Currently only a _REPL_ GUI
+exists but a _Swing_ and _Web_ GUI will follow.
+
+### REPL 
+
 The easiest way to start the simulation is to use the functions
 provided in package
 `de.herrnorbert.EvolutionLoop.gui-repl.gui-repl`. Furthermore there
@@ -26,7 +31,7 @@ are some functions to inspect the world and the animals in it.
      nil
      de.herrnorbert.EvolutionLoop.gui-repl.gui-repl=> (compile 'de.herrnorbert.EvolutionLoop.gui-repl.gui-repl)
      de.herrnorbert.EvolutionLoop.gui-repl.gui-repl
-     de.herrnorbert.EvolutionLoop.gui-repl.gui-repl=> (evaluate-times 100)
+     de.herrnorbert.EvolutionLoop.gui-repl.gui-repl=> (evolve-times 100)
      Evaluating step  1
      Evaluating step  2
      Evaluating step  3
@@ -67,7 +72,8 @@ are some functions to inspect the world and the animals in it.
 
 ## Documentation
 
-Have a look at the _documentation_ in the `docs`folder.
+Have a look at the _documentation_ in the `docs` folder. It's
+poweredby [Marginalia](https://github.com/fogus/marginalia).
 
 ## License
 

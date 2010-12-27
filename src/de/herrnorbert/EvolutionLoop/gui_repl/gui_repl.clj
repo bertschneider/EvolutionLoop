@@ -4,8 +4,7 @@ This package provides functions to evaluate a random _world_ and display the ste
 The code isn't really polished right now so don't be to shocked."
   (:use [de.herrnorbert.EvolutionLoop.core.utils :only [rnd-int-vec]])
   (:use [de.herrnorbert.EvolutionLoop.core.core :only [update-world]])
-  (:use [clojure.pprint])
-  (:gen-class))
+  (:use [clojure.pprint]))
 
 
 ;; A _world_ with width 100, height 30 and a randomly added _animal_ with random genes.
@@ -28,23 +27,23 @@ The code isn't really polished right now so don't be to shocked."
 
 ;; *Some drawing functions*
 
-(defn has-location?
-  "Checks if something in `values` contains the given location at key `:location`."
-  [location values]
-  (some #(= location (:location %)) values))
-
 (defn draw-world
   "Displays the given world at the REPL.  
 _Animals_ will be displayed by an `A`, _plants_ by a `*`."
   [{:keys [plants animals] :as world}]
   (let [width  (get-in world [:options :width])
-        height (get-in world [:options :height])]
+        height (get-in world [:options :height])
+        contains-animal? (fn [location]
+                           (some #(= location (:location %)) animals))
+        contains-plant? (fn [location]
+                          (contains? plants location))]
     (->> (for [y (range 0 height)
                x (range 0 width)]
-           (cond
-            (has-location? [y x] animals) "A"
-            (contains? plants [y x]) "*"
-            :default " "))
+           (let [location [y x]]
+             (cond
+              (contains-animal? location) "A"
+              (contains-plant? location) "*"
+              :default " ")))
          (partition width)
          (map #(apply str %))
          (map println)
@@ -64,13 +63,13 @@ _Animals_ will be displayed by an `A`, _plants_ by a `*`."
   []
   (reset! world (gen-world)))
 
-(defn evaluate
-  "Evaluates the world to its next state."
+(defn evolve
+  "Evolves the world to its next state."
   []
   (reset! world (update-world @world)))
 
-(defn evaluate-times
-  "Evaluates the current world `count` times to its next state."
+(defn evolve-times
+  "Evolves the current world `count` times to its next state."
   [count]
   (let [rate (int (/ count 100))
         display-rate (if (zero? rate) 1 rate)
@@ -83,35 +82,42 @@ _Animals_ will be displayed by an `A`, _plants_ by a `*`."
         (draw)
         (recur (inc i))))))
 
-(defn evaluate-and-draw-next-state
-  "Evaluates the world to its next state and displays it at the REPL."
+(defn evolve-and-draw-next-state
+  "Evolves the world to its next state and displays it at the REPL."
   []
   (evaluate)
   (draw))
 
-(defn evaluation-loop
-  "Infinitly evaluates and displays the world."
+(defn evolution-loop
+  "Infinitely evolves and displays the world."
   []
   (loop [i 0]
-    (println "Year " i)
     (draw)
     (evaluate)
     (Thread/sleep 1000)
     (recur (inc i))))
 
+;;
+;; Inspecting the world.
+;;
+
 (defn pprint-world
-  "Prints the world struct to the REPL."
+  "Prints the entire world struct to the REPL."
   []
   (pprint @world))
 
 (defn pprint-animals
-  "Prints the animals of the world."
+  "Prints the animals of the world to the REPL."
   []
   (pprint (:animals @world)))
 
+(defn print-animal-positions
+  "Prints the positions of all animals in the world to the REPL."
+  []
+  (map #(:location %) (:animals @world)))
+
 (defn pprint-at-location [y x]
-  "Prints the animal at the given location."
+  "Prints the animal at the given location to the REPL."
   (let [animals (:animals @world)
         location [y x]]
-    (pprint
-     (doall  (filter #(= location (:location %)) animals)))))
+    (pprint (filter #(= location (:location %)) animals))))
