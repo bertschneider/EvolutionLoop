@@ -4,7 +4,8 @@ This package provides functions to evaluate a random _world_ and display the ste
 The code isn't really polished right now so don't be to shocked."
   (:use [de.herrnorbert.EvolutionLoop.core.utils :only [rnd-int-vec]])
   (:use [de.herrnorbert.EvolutionLoop.core.core :only [update-world]])
-  (:use [clojure.pprint]))
+  (:use [clojure.pprint])
+  (:gen-class))
 
 
 ;; A _world_ with width 100, height 30 and a randomly added _animal_ with random genes.
@@ -71,7 +72,8 @@ _Animals_ will be displayed by an `A`, _plants_ by a `*`."
 (defn evaluate-times
   "Evaluates the current world `count` times to its next state."
   [count]
-  (let [display-rate (int (/ count 100))
+  (let [rate (int (/ count 100))
+        display-rate (if (zero? rate) 1 rate)
         should-display? #(zero? (mod % display-rate))]
     (loop [i 1]
       (if (should-display? i)

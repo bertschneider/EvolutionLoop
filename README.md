@@ -15,45 +15,50 @@ provided in the package
 `de.herrnorbert.EvolutionLoop.gui-repl.gui-repl`. Furthermore there
 are some functions to inspect the world and the animals in it.
 
-   de.herrnorbert.EvolutionLoop.gui-repl.gui-repl> (time (evaluate-times 10000))
-   Evaluating step  100
-   Evaluating step  200
-   Evaluating step  300
-   Evaluating step  400
-   ...
-   Evaluating step  9900
-   Evaluating step  10000
-         *        * *                  A  A                 A                                          
-   *    *         * *                 A         A                            A                         
-        *          * * * *                                        A                     *              
-                             *               A   A         A                                 A A       
-                  *                A            A  A            A          A        *                  
-                                                     AA    A               A                           
-                                 *    *    *                   A                    *         *        
-   A          A                                A              A   A                                    
-                  *                                     A A        A                        A  *       
-           *            A                        A A AA   AA A   A                                  *  
-                                      *       A  A                                                     
-        *                            *           A  A  A        A                  *            A      
-      A                 A          A           AA AA    *                  *                A A        
-      A                                        A *   A   A  A                           A              
-                         A            A       A  *  A  *   A  A                        A           *   
-                                    A      A       AAA * *                                             
-          A                      A          AA    AAAA A*      A                                    A A
-           A                 A        A A               *                                              
-             AA                 *                 A*     *   *     A                      *            
-           A           A     A                 A    A   *A                                             
-                                          A    A    AA      A               *         **               
-                      A   A  A              A                        A                   *             
-                                                               *        A                      *       
-                                         A         A              *    A            A   *    *         
-      * *         *   A                       A  A       *                A                            
-    A              *                                      A   *                                        
-           A                       *          A                                     *       *    A     
-   *                  *    A           *        A     A      A  AA       *                             
-              A               * A                                      *    A      *                  *
-                                            A         A              A            *                    
-
+     $ lein repl
+     REPL started; server listening on localhost:34850.
+     user=> (ns de.herrnorbert.EvolutionLoop.gui-repl.gui-repl)
+     nil
+     de.herrnorbert.EvolutionLoop.gui-repl.gui-repl=> (compile 'de.herrnorbert.EvolutionLoop.gui-repl.gui-repl)
+     de.herrnorbert.EvolutionLoop.gui-repl.gui-repl
+     de.herrnorbert.EvolutionLoop.gui-repl.gui-repl=> (evaluate-times 100)
+     Evaluating step  1
+     Evaluating step  2
+     Evaluating step  3
+     ...
+     Evaluating step  98
+     Evaluating step  99
+     Evaluating step  100
+                                                                                           *      *      
+                                             *                                     ** *                  
+              *                                                   *              *     *                *
+         *         *        *                                  A                   *           *         
+      *                                **           A                       *                            
+     *          *                               *                                                        
+                                                 *                                                *      
+                                                              *        *                                 
+         *                                                                               *               
+                                               A                                                         
+                                           *        *  *               A              *                  
+               *                         *        A *  *   * A                                           
+                                              *  A     ** *                          *       *           
+          *            *               *             *  *  *                                          *  
+                                            *  *  A  *   *                                  *            
+                              *           *    *  *             A                       *                
+                                                  A * **             *                                   
+                                                  * * A* *                A                 *            
+          *               **                      A**  *  * A                             *          *   
+                   *                                 *  * *      *                     *                 
+                 *                               A                    *   A                        *     
+                                    *                             A                             *        
+        *    *          *                        *                                                       
+                                                          A                 A            *               
+        **                                             *     *                                           
+            *                      *                                                A          *    *    
+                                  *                      *                          *                    
+        *                                       *        *            *                     *           *
+                              *       *                   *                 *             *             *
+                               *                                                                         
 
 ## Documentation
 
