@@ -103,7 +103,8 @@ Return: `[world-with-child updated-animal]`"
           mutation (rand-int (count genes))
           gene (+ (get genes mutation) (- (rand-int 3) 1))
           new-genes (assoc genes mutation (if (neg? gene) 0 gene))
-          child (assoc parent :genes new-genes)
+          child (-> (assoc parent :genes new-genes)
+                    (assoc-in [:stats :age] 0))
           new-world (conj-in world :animals [child])]
       [new-world parent])
     [world animal]))
