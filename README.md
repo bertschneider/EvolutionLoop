@@ -15,7 +15,7 @@ work out for me. I will rewrite them with `LazyTest`in the future.
 
 ## Usage
 
-A few GUIs are plant for this game. Currently only a _REPL_ GUI
+A few GUIs are planned for this game. Currently only a _REPL_ GUI
 exists but a _Swing_ and _Web_ GUI will follow.
 
 ### REPL 
@@ -72,8 +72,8 @@ are some functions to inspect the world and the animals in it.
 
 ## Documentation
 
-Have a look at the _documentation_ in the `docs` folder. It's
-poweredby [Marginalia](https://github.com/fogus/marginalia).
+Have a look at the `docs` folder. It's
+powered by [Marginalia](https://github.com/fogus/marginalia).
 
 ## License
 

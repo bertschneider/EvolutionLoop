@@ -19,18 +19,20 @@ The code isn't really polished right now so don't be to shocked."
    :options {:width  100
              :height 30
              :plant-energy 80
-             :reproduction-energy 300}})
+             :reproduction-energy 100}})
 
 ;; This atom holds the current world state and _will be mutated_!
 (def world (atom (gen-world)))
 
 
-;; *Some drawing functions*
+;;
+;; *Drawing functions*
+;;
 
 (defn draw-world
   "Displays the given world at the REPL.  
 _Animals_ will be displayed by an `A`, _plants_ by a `*`."
-  [{:keys [plants animals] :as world}]
+  [{:keys [plants animals stats] :as world}]
   (let [width  (get-in world [:options :width])
         height (get-in world [:options :height])
         contains-animal? (fn [location]
@@ -48,10 +50,11 @@ _Animals_ will be displayed by an `A`, _plants_ by a `*`."
          (map #(apply str %))
          (map println)
          (doall))
-    ""))
+    (str "Year " (:age stats))))
 
-
+;;
 ;; *Game functions*
+;;
 
 (defn draw
   "Draws the current world at the REPL."
@@ -74,18 +77,21 @@ _Animals_ will be displayed by an `A`, _plants_ by a `*`."
   (let [rate (int (/ count 100))
         display-rate (if (zero? rate) 1 rate)
         should-display? #(zero? (mod % display-rate))]
+    (print "0% ")
     (loop [i 1]
       (if (should-display? i)
-        (println "Evaluating step " i))
-      (evaluate)
+        (print "."))
+      (evolve)
       (if (>= i count)
-        (draw)
+        (do
+          (println " 100%")
+          (draw))
         (recur (inc i))))))
 
 (defn evolve-and-draw-next-state
   "Evolves the world to its next state and displays it at the REPL."
   []
-  (evaluate)
+  (evolve)
   (draw))
 
 (defn evolution-loop
@@ -93,12 +99,12 @@ _Animals_ will be displayed by an `A`, _plants_ by a `*`."
   []
   (loop [i 0]
     (draw)
-    (evaluate)
+    (evolve)
     (Thread/sleep 1000)
     (recur (inc i))))
 
 ;;
-;; Inspecting the world.
+;; *Inspecting the world*
 ;;
 
 (defn pprint-world

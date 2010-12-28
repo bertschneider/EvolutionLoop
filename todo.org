@@ -1,0 +1,14 @@
+EvolutionLoop TODO
+--------------------------------------
+
+* Rewrite tests with LazyTest
+* Performance
+  - [ ] Primitive types
+  - [ ] Review existing code
+* Archive                                                           :ARCHIVE:
+** Add some stats                                                   :ARCHIVE:
+   :PROPERTIES:
+   :ARCHIVE_TIME: 2010-12-28 Tue 10:54
+   :END:
+   - [X] Year of world
+   - [X] Animal age

@@ -26,7 +26,7 @@ Evaluate the world to the next state with `update-world`:
 ;;     7 A 3  
 ;;     6 5 4
 ;;
-(defstruct animal :location :energy :direction :genes)
+(defstruct animal :location :energy :direction :genes :stats)
 
 ;; The _world_ struct. It consists of the animals, plants, different areas and some options.  
 ;; A default world would look like:
@@ -40,7 +40,7 @@ Evaluate the world to the next state with `update-world`:
 ;;         :plant-energy 80
 ;;         :reproduction-energy 300})
 ;;         
-(defstruct world :animals :plants :areas :options)
+(defstruct world :animals :plants :areas :options :stats)
 
 
 ;; *Plants*
@@ -108,6 +108,11 @@ Return: `[world-with-child updated-animal]`"
       [new-world parent])
     [world animal]))
 
+(defn update-animal-stats
+  "Updates the animal stats like age etc."
+  [world {:keys [stats] :as animal}]
+  [world (assoc animal :stats (assoc stats :age (inc (get stats :age 0))))])
+
 (defn handle-animals
   "Handles the movement, eating, reproduction, etc. of the given _animals_ in the world.  
 Return: `updated-world`"
@@ -120,14 +125,21 @@ Return: `updated-world`"
           (let [[world animal] (->> (turn world animal)
                                     (apply move)
                                     (apply eat)
-                                    (apply reproduce))]
+                                    (apply reproduce)
+                                    (apply update-animal-stats))]
             (recur (conj-in world :animals [animal]) (rest animals)))
           (recur world (rest animals)))))))
+
+(defn update-world-stats
+  "Updates the stats of the world like its age."
+  [{:keys [stats] :as world}]
+  (assoc world :stats (assoc stats :age (inc (get stats :age 0)))))
 
 (defn update-world
   "Evaluates the _world_ to the next state.  
 Return: `world-in-next-state`"
   [world]
   (-> (handle-animals world)
-      (add-plants)))
+      (add-plants)
+      (update-world-stats)))
 
