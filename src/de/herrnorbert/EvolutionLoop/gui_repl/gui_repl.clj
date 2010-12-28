@@ -32,25 +32,30 @@ The code isn't really polished right now so don't be to shocked."
 (defn draw-world
   "Displays the given world at the REPL.  
 _Animals_ will be displayed by an `A`, _plants_ by a `*`."
-  [{:keys [plants animals stats] :as world}]
-  (let [width  (get-in world [:options :width])
-        height (get-in world [:options :height])
-        contains-animal? (fn [location]
-                           (some #(= location (:location %)) animals))
-        contains-plant? (fn [location]
-                          (contains? plants location))]
-    (->> (for [y (range 0 height)
-               x (range 0 width)]
-           (let [location [y x]]
-             (cond
-              (contains-animal? location) "A"
-              (contains-plant? location) "*"
-              :default " ")))
-         (partition width)
-         (map #(apply str %))
-         (map println)
-         (doall))
-    (str "Year " (:age stats))))
+  ([world]
+     (draw-world world [-1 -1]))
+  ([{:keys [plants animals stats] :as world} search]
+      (let [width  (get-in world [:options :width])
+            height (get-in world [:options :height])
+            contains-animal? (fn [location]
+                               (some #(= location (:location %)) animals))
+            contains-plant? (fn [location]
+                              (contains? plants location))
+            contains-search? (fn [location]
+                               (= location search))]
+        (->> (for [y (range 0 height)
+                   x (range 0 width)]
+               (let [location [y x]]
+                 (cond
+                  (contains-search? location) "X"
+                  (contains-animal? location) "A"
+                  (contains-plant? location) "*"
+                  :default " ")))
+             (partition width)
+             (map #(apply str %))
+             (map println)
+             (doall))
+        (str "Year " (:age stats)))))
 
 ;;
 ;; *Game functions*
@@ -58,8 +63,10 @@ _Animals_ will be displayed by an `A`, _plants_ by a `*`."
 
 (defn draw
   "Draws the current world at the REPL."
-  []
-  (draw-world @world))
+  ([]
+     (draw-world @world))
+  ([y x]
+     (draw-world @world [y x])))
 
 (defn restart
   "Creates a new world."
