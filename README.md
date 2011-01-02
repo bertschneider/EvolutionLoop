@@ -11,7 +11,9 @@ build two new kinds of animals.
 ## Tests
 
 Currently the tests aren't working. I tried `midje` but that didn't
-work out for me. I will rewrite them with `LazyTest`in the future.
+work out for me. I will rewrite them step by step with `LazyTest`.
+
+To run the available tests use: `lein lazytest`
 
 ## Usage
 
@@ -31,44 +33,39 @@ are some functions to inspect the world and the animals in it.
      nil
      de.herrnorbert.EvolutionLoop.gui-repl.gui-repl=> (compile 'de.herrnorbert.EvolutionLoop.gui-repl.gui-repl)
      de.herrnorbert.EvolutionLoop.gui-repl.gui-repl
-     de.herrnorbert.EvolutionLoop.gui-repl.gui-repl=> (evolve-times 100)
-     Evaluating step  1
-     Evaluating step  2
-     Evaluating step  3
-     ...
-     Evaluating step  98
-     Evaluating step  99
-     Evaluating step  100
-                                                                                           *      *      
-                                             *                                     ** *                  
-              *                                                   *              *     *                *
-         *         *        *                                  A                   *           *         
-      *                                **           A                       *                            
-     *          *                               *                                                        
-                                                 *                                                *      
-                                                              *        *                                 
-         *                                                                               *               
-                                               A                                                         
-                                           *        *  *               A              *                  
-               *                         *        A *  *   * A                                           
-                                              *  A     ** *                          *       *           
-          *            *               *             *  *  *                                          *  
-                                            *  *  A  *   *                                  *            
-                              *           *    *  *             A                       *                
-                                                  A * **             *                                   
-                                                  * * A* *                A                 *            
-          *               **                      A**  *  * A                             *          *   
-                   *                                 *  * *      *                     *                 
-                 *                               A                    *   A                        *     
-                                    *                             A                             *        
-        *    *          *                        *                                                       
-                                                          A                 A            *               
-        **                                             *     *                                           
-            *                      *                                                A          *    *    
-                                  *                      *                          *                    
-        *                                       *        *            *                     *           *
-                              *       *                   *                 *             *             *
-                               *                                                                         
+     de.herrnorbert.EvolutionLoop.gui-repl.gui-repl=> (evolve-times 10000)
+     0% .................................................................................................... 100%
+          *                          *                          *                    *  *              A 
+           A              A      A       *     *                      A                    A             
+              A           A                   *                                        *                 
+                                                  A*    A                *            *                  
+                  A A  A   A                        A                                 * A           *    
+                                                          A         *               *                   A
+      A  A           *         *                      A A A                            A           *     
+              A                                  A  AA          A                                        
+                      A                         A     AA                     *                        *  
+       A    A                            A             A  A       A                   AA                 
+          A                A     A   *          A A A A                 A                                
+               A                     *       *A         AA *               A                   *         
+        A A                                        AA A    AA     *                              *       
+                                                  A   A  A  AA              A                            
+                             A           A           A A                                 *    A          
+           A                         A            A AA AA AAA                                     A      
+                                               AA  AAA  A AA       A                                  A  
+                A                              A    AA  A  * A                *                   A   A  
+     A     A A                       A          A   A     A    A                                       * 
+                                             A    AA                                                     
+         A        A   A                                    A       A           A   A                     
+                                                         AA  A                                 *         
+               A                             A A                 A                          A            
+                             *             *       A          A                                          
+                                           A         A                         A*   A* **                
+                                                                                 A                       
+             A                                      A    A              *                   *            
+        A    A    A         * A  A            *         A     *           AA         A         *         
+                   *             A       *     A    A              *     A                             AA
+                            A                           *                                         A      
+     "Year 10000"
 
 ## Documentation
 
