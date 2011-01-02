@@ -7,6 +7,20 @@ The code isn't really polished right now so don't be to shocked."
   (:use [clojure.pprint]))
 
 
+#_(reduce
+ (fn [vals val]
+   (assoc vals val (inc (get vals val 0))))
+ {}
+ (map #(get-in % [:stats :age]) (:animals @world)))
+
+
+#_(reduce (fn [sums animal]
+          (let [age (get-in animal [:stats :age] 0)
+                sum (inc (get sums age 0))]
+            (assoc sums age sum)))
+        {} (:animals @world))
+
+
 ;; A _world_ with width 100, height 30 and a randomly added _animal_ with random genes.
 (defn gen-world []
   {:animals
