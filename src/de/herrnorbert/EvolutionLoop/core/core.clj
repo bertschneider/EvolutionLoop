@@ -2,8 +2,7 @@
   "### The core namespace of this little game.
 
 The main animal functions return a vector like `[updated-world animal]`. This vector is shifted from one function, like `eat`, to the other functions, like `reproduce`.  
-Evaluate the world to the next state with `update-world`:   
-`(update-world default-world)`"
+Evaluate the world to the next state with `update-world`."
   (:use [de.herrnorbert.EvolutionLoop.core.locations :only [rnd-location directions]])
   (:use [de.herrnorbert.EvolutionLoop.core.utils :only [rnd-int-vec conj-in]]))
 
@@ -15,7 +14,7 @@ Evaluate the world to the next state with `update-world`:
 (def *default-reproduction-energy* 300)
 
 ;; A _plant_ only consists of a location and some energy an animal can gain by eating it.
-(defstruct plant :location :energy)
+(defrecord Plant [^ints location ^int energy])
 
 ;; An _animal_ consists of a location, energy (remaining turns it can survive
 ;; without eating), a direction and some genes which define the
@@ -26,21 +25,19 @@ Evaluate the world to the next state with `update-world`:
 ;;     7 A 3  
 ;;     6 5 4
 ;;
-(defstruct animal :location :energy :direction :genes :stats)
+(defrecord Animal [^ints location ^int energy ^int direction ^ints genes stats])
 
-;; The _world_ struct. It consists of the animals, plants, different areas and some options.  
-;; A default world would look like:
-;;      
-;;      (struct world
-;;        [(struct animal [50 50] 1000 0 (rnd-int-vec 8 10))]
-;;        {}
-;;        [[0 0 100 100] [45 45 10 10]]
-;;        {:width  100
-;;         :height 30
-;;         :plant-energy 80
-;;         :reproduction-energy 300})
+;; The _world_ consists of the animals, plants, different areas and
+;; some options and stats. 
+;;
+;;     Options: :width
+;;              :height
+;;              :plant-energy
+;;              :reproduction-energy
+;;
+;;     Stats: :age
 ;;         
-(defstruct world :animals :plants :areas :options :stats)
+(defrecord World [animals plants areas options stats])
 
 
 ;; *Plants*
@@ -50,7 +47,7 @@ Evaluate the world to the next state with `update-world`:
 Return: `[world]`"
   [{:keys [plants areas] :as world}]
   (let [energy (get-in world [:options :plant-energy] *default-plant-energy*)
-        grown (map #(struct plant (rnd-location %) energy) areas)]
+        grown (map #(Plant. (rnd-location %) energy) areas)]
     (reduce (fn [world plant] (assoc-in world [:plants (:location plant)] plant)) world grown)))
 
 
@@ -87,8 +84,8 @@ Return: `[world updated-animal]`"
 During this action the _plant_ will be removed from the _world_.  
 Return: `[world-without-eaten-plants updated-animal]`"
   [{plants :plants :as world} {:keys [location energy] :as animal}]
-  (let [at-position (get plants location {:energy 0})
-        animal (assoc animal :energy (+ energy (:energy at-position)))
+  (let [plant-at-position (get plants location (Plant. location 0))
+        animal (assoc animal :energy (+ energy (:energy plant-at-position)))
         world (assoc world :plants (dissoc plants location))]
     [world animal]))
 
